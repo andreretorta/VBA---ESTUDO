@@ -1,0 +1,84 @@
+Sub compilação()
+
+linha = 1 ' Iremos utilizar a "linha = 1" dentro do looping
+
+linha_fim = Range("A1").End(xlDown).Row
+' Essse comando seria o equivalente a selecionar a acelula "A1" até ao ultimo preenchimento da celula (CTRL + Seta para baixo)
+'Junto com o conjunto da Célula (Row)
+
+Range("C2:C" & linha_fim).Copy
+Range("J1").PasteSpecial
+Application.CutCopyMode = False
+ActiveSheet.Range("$J$1:$J$" & linha_fim).RemoveDuplicates Columns:=1, Header:= _
+    xlNo
+    
+'Nesse bloco ralizamos o processo de copiar , colar , descelecionar a copia e romever as duplicatas
+'Vale lembrar que a função "linha_fim" tem como o objetivo de levar a seleção até o final da ultima célula registrada
+    
+    
+linha_fim = Range("J1").End(xlDown).Row
+
+'Esse ultimo código gera um novo valor a função de linha_fim
+
+While linha <= linha_fim
+    Sheets.Add After:=ActiveSheet
+    ActiveSheet.Name = Sheets("Base de Dados").Cells(linha, 10)
+    
+    Sheets("Base de Dados").Range("A1:C1").Copy
+    ActiveSheet.Range("A1").PasteSpecial
+    
+    linha = linha + 1
+    
+Wend
+    
+'Dentro desse looping que geramos, estamos comandando que o VBA crie uma nova planilha e que cada planilha tenha o nome de acordo
+'com a linha gerada no ultimo código do linha_fim com a colina "10", vulgo coluna "J". Inserindo assim o nome de cada bairro em cada planilha.
+'Com isso, informamos ao VBA  que copie os dados da celula A1 ate a C1 e que cole nas pastas criadas de acordo com
+'o nome dos bairros
+    
+    
+Sheets("Base de Dados").Range("J:J").Clear
+
+linha = 2
+
+'Com isso com esses dois blocos limpamos a coluna "J" de informações e criamos um novo valor a variavel linha = 2
+
+While Sheets("Base de Dados").Cells(linha, 1) <> ""
+Sheets("Base de Dados").Range("A" & linha & ":C" & linha).Copy
+
+'Dentro desse bloco de Código, estamos informando que enquanto dentro da planilha "Base de Dados"  dentro das celulas
+'de acordo com  o valor estipulado da linha e a coluna "1" for diferente de zero. Deve-se copiar os valores dentro das celulas
+'(A a C ; linhas)
+
+
+bairro = Sheets("Base de Dados").Cells(linha, 3)
+Sheets(bairro).Select
+Range("A10000").End(xlUp).Offset(1, 0).PasteSpecial
+Application.CutCopyMode = False
+
+Sheets("Base de Dados").Select
+
+linha = linha + 1
+
+Wend
+
+'Nesse bloco de código estamos criando uma variavel "bairro" e que dentro dessa variavel está a nossa planilha "Base de Dados"
+'com seus valores de linha e coluna. Logo em seguida inserimos a função bairro dentro da função "Sheets" com o intuito de poder
+'selecionar dentro das planilhas com que iremos trabalhar
+'Com a função Range, estamos dizendo para que vá para a celula "A10000" e qua a partir de lá ela SUBA até a primeira celula vazia
+'e logo após com que ela vá para baixo uma linha e nenhuma coluna "Offset(1,0)" e com isso finalizar colando a informação
+'da linha anterior
+'Por ultimo apicamos a função para que ele descelecione a função copy
+
+
+
+For Each aba In ThisWorkbook.Sheets
+    
+    aba.Columns("A:C").AutoFit
+
+Next
+
+
+'Por fim, Construimos esse loop "For Each" com o intuito de formatar os valores de todas as celulas com a função AutoFit
+
+End Sub
