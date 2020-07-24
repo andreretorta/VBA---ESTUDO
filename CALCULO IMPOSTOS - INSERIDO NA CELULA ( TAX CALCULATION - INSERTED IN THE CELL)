@@ -1,0 +1,49 @@
+ub TESTE2()
+
+Dim x As Double
+
+Dim y As Double
+
+Dim sal_bruto As Double
+
+
+
+ x = Application.InputBox("Ganho por Hora")
+
+ y = Application.InputBox("Hora mes trabalhada")
+
+
+sal_bruto = x * y
+
+
+If sal_bruto >= 1874.4 Then
+
+'IR = Format(IR, "R$#.##0,00")
+'INSS = Format(INSS, "R$#.##0,00")
+'Sindi = Format(Sindi, "R$#.##0,00")
+ 
+IR = ((sal_bruto * 11) / 100)
+INSS = ((sal_bruto * 8) / 100)
+Sindi = ((sal_bruto * 5) / 100)
+
+Sal_liquido = sal_bruto - IR - INSS - Sindi
+
+ Planilha1.Cells(2, 2).Value = "O seu salário bruto é, R$" & sal_bruto
+
+ Planilha1.Cells(3, 2).Value = "O valor de desconto de IR é, R$" & IR
+
+ Planilha1.Cells(4, 2).Value = "O valor de desconto de INSS é, R$ " & INSS
+
+ Planilha1.Cells(5, 2).Value = "O valor de desconto de Sindi é, R$" & Sindi
+
+ Planilha1.Cells(6, 2).Value = "O seu salário líquido é, R$" & Sal_liquido
+
+Else
+ Planilha1.Cells(2, 2).Value = "Seu salário bruto é, R$" & sal_bruto
+
+
+End If
+
+
+
+End Sub
