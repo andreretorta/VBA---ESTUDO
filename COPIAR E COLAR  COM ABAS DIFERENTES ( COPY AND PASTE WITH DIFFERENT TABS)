@@ -1,0 +1,25 @@
+Sub COPY_PASTE()
+
+Dim arquivo As Workbook
+
+
+linha_ = Range("B3:E3").End(xlDown).Row
+
+linha = Range("B3:E" & linha_).Copy
+
+Set arquivo = Application.Workbooks.Add
+
+ActiveSheet.Name = "Arquivo Novo"
+
+ActiveSheet.Range("B2").PasteSpecial
+
+Application.CutCopyMode = False
+
+Worksheets("Arquivo Novo").Columns("A:I").AutoFit
+
+
+
+
+End Sub
+
+
