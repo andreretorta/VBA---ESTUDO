@@ -1,0 +1,21 @@
+Sub TESTAGEM()
+
+linha_ = Range("B3:D3").End(xlDown).Row
+
+linha = Range("B2:D" & linha_).Copy
+
+ActiveWorkbook.Sheets.Add After:=ActiveSheet
+ActiveSheet.Range("G5").PasteSpecial
+
+Application.CutCopyMode = False
+
+
+For Each aba In ThisWorkbook.Sheets
+   aba.Columns("G:I").AutoFit
+Next
+
+
+
+
+End Sub
+
