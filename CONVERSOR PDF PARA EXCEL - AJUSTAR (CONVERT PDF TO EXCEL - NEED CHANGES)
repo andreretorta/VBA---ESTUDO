@@ -1,0 +1,45 @@
+ Sub Wort_To_PDF()
+
+       Application.ScreenUpdating = False
+       Application.DisplayAlerts = False
+       Application.DisplayStatusBar = True
+
+        
+       Dim PDF_path As String
+       Dim excel_path As String
+
+        
+       PDF_path = ThisWorkbook.path & "C:\Users\retortaa\Desktop\AUTOMATIZAÇÃO HABITEC\Pdf"
+       excel_path = ThisWorkbook.path & "C:\Users\retortaa\Desktop\AUTOMATIZAÇÃO HABITEC\Excel"
+
+       Dim fso As New FileSystemObject
+       Dim fo As Folder
+       Dim f As File
+    
+       
+        Set fo = fso.GetFolder(PDF_path)
+       
+       Dim wa As excel.Application
+       Dim excel As Object
+
+       Set wa = CreateObject("excel.Application")
+       wa.Visible = True
+
+       Dim file_Count As Integer
+
+      For Each f In fo.Files
+       
+       Set excel = Workbooks.Open(f.path)
+       'wa.excel.Open(f.path)
+       excel.SaveAs2 (excel_path & "C:\Users\retortaa\Desktop\AUTOMATIZAÇÃO HABITEC\Excel" & Replace(f.Name, ".pdf", ".xls"))
+       excel.Close False
+       file_Count = file_Count + 1
+
+Next
+
+       wa.Quit
+
+       MsgBox "All PDF files have been converted in to word", vbInformation
+       Application.StatusBar = ""
+
+   End Sub
