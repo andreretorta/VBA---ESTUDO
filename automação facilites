@@ -1,0 +1,23 @@
+Sub copia_outrapasta()
+
+'Workbooks.Open ("C:\Users\retortaa\Desktop\AUTOMATIZAÇÃO HABITEC\.xlsx")
+Dim month As String
+'month = MonthName()
+
+linha_fim = Range("A1:J1").End(xlDown).Row
+
+Range("A1:J" & linha_fim).Copy
+
+Workbooks.Open ("C:\Users\retortaa\Desktop\AUTOMATIZAÇÃO HABITEC\Controle Geral.xlsx")
+
+Sheets.Add After:=ActiveSheet
+
+ActiveSheet.Name = "month"
+
+Range("A1:J1").PasteSpecial
+
+Application.CutCopyMode = False
+
+
+
+End Sub
