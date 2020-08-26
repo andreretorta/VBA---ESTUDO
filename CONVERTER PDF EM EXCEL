@@ -1,0 +1,43 @@
+Sub pdf_to_excel()
+ Dim fso As New FileSystemObject
+ Dim fo As folder
+ Dim f As File
+ 
+ Set fo = fso.GetFolder(Application.ThisWorkbook.Path & ".Pdf")
+ 
+ Dim wa As Object
+ Dim doc As Object
+ Dim wr As Object
+ 
+ 
+ Set wa = CreateObject("word.application")
+ 
+ wa.Visible = True
+ 
+ 
+ Dim nwb As Workbook
+ Dim nsh As Worksheet
+ 
+ For Each f In fo.files
+    Set doc = wa.Documents.Open(f.Path, False, Format:="PDF Files")
+    Set wr = doc.Paragraphs(1).Range
+    wr.WholeStory
+    
+    Set nwb = Workbooks.Add
+    Set nsh = nwb.Sheets(1)
+    wr.Copy
+    
+    nsh.Paste
+    nwb.SaveAs (Application.ThisWorkbook.Path & "*.Excel" & Replace(f.Name, ".Pdf", ".xlsx"))
+    
+    doc.Close
+    nwb.Close
+    Next
+    
+    wa.Quit
+    
+    MsgBox "arquivos convertidos"
+    
+ 
+ 
+ End Sub
