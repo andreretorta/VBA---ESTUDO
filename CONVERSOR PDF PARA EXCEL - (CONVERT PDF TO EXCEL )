@@ -1,0 +1,39 @@
+Sub pdf_to_excel()
+
+Dim pdf_path As Variant
+Dim wa As Object
+Dim doc As Object
+Dim wr As Object
+
+Set wa = CreateObject("word.application")
+wa.Visible = True
+
+
+Dim nwb As Workbook
+Dim nsh As Worksheet
+
+pdf_path = Application.GetOpenFilename()
+
+If pdf_path <> False Then
+    Set doc = wa.documents.Open(pdf_path, False, Format:="Pdf Files")
+    Set wr = doc.Paragraphs(1).Range
+    wr.WholeStory
+    
+    
+    Set nwb = Workbooks.Add
+    Set nsh = nwb.Sheets(1)
+    wr.Copy
+    
+    nsh.Paste
+    nwb.SaveAs Filename:="Relatório", FileFormat:=xlWorkbookNormal
+    'Replace(pdf_path, ".pdf", ".xlsx"))
+    doc.Close False
+    nwb.Close False
+    
+
+End If
+
+wa.Quit
+
+MsgBox ("Arquivos Convertidos")
+End Sub
